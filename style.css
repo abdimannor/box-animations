@@ -1,0 +1,29 @@
+body {
+  margin: 100px;
+}
+
+.yttre-box {
+  padding: 50px;
+  background-color: #FF6347;
+}
+
+.inre-box {
+  padding: 20px;
+  background-color: #6495ED;
+}
+
+.animation-box {
+  padding: 30px;
+  background-color: #FFD700;
+  animation: flyttaBox 2s infinite alternate;
+}
+
+@keyframes flyttaBox {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(200px); }
+}
+
+.sista-box {
+  margin: 50px;
+  background-color: #32CD32;
+}
