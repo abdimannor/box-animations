@@ -4,26 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Box Animations</title>
-  <meta name="description" content="CSS keyframe animations with translateX — nested boxes sliding across the screen.">
+  <meta name="description" content="A compact CSS motion lab with keyframes, nested boxes, timing, rhythm, and reduced-motion support.">
+  <link rel="canonical" href="https://abdimannor.github.io/box-animations/">
   <meta property="og:title" content="Box Animations">
-  <meta property="og:description" content="CSS keyframe animations with translateX — nested boxes sliding across the screen.">
+  <meta property="og:description" content="A compact CSS motion lab with keyframes, nested boxes, timing, rhythm, and reduced-motion support.">
   <meta property="og:url" content="https://abdimannor.github.io/box-animations/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Box Animations">
-  <meta name="twitter:description" content="CSS keyframe animations with translateX — nested boxes sliding across the screen.">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta name="twitter:description" content="A compact CSS motion lab with keyframes, nested boxes, timing, rhythm, and reduced-motion support.">
+  <meta name="theme-color" content="#101827">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="yttre-box">
-    <div class="inre-box">
-      <div class="animation-box">
-        Den här boxen har en animation!
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">CSS Motion Lab</p>
+        <h1 id="page-title">Box Animations</h1>
+        <p class="lead">Three small animation studies built with plain HTML and CSS: slide, pulse, and orbit.</p>
       </div>
-    </div>
-  </div>
-  <div class="sista-box">
-    Detta är den sista boxen.
-  </div>
+      <a class="source-link" href="https://github.com/abdimannor/box-animations" target="_blank" rel="noopener">GitHub</a>
+    </section>
+
+    <section class="lab-grid" aria-label="Animation examples">
+      <article class="motion-card">
+        <div class="stage stage-slide" aria-hidden="true">
+          <div class="rail">
+            <div class="box box-slide"></div>
+          </div>
+        </div>
+        <div class="card-copy">
+          <span class="label">01 / Translate</span>
+          <h2>Sliding box</h2>
+          <p>A nested box moves across its parent using `transform`, keeping layout stable while the visual layer moves.</p>
+        </div>
+      </article>
+
+      <article class="motion-card">
+        <div class="stage stage-pulse" aria-hidden="true">
+          <div class="box box-pulse"></div>
+          <div class="box box-pulse delay"></div>
+        </div>
+        <div class="card-copy">
+          <span class="label">02 / Scale</span>
+          <h2>Pulse timing</h2>
+          <p>Two elements share the same keyframes with different delays, creating rhythm without extra markup logic.</p>
+        </div>
+      </article>
+
+      <article class="motion-card">
+        <div class="stage stage-orbit" aria-hidden="true">
+          <div class="orbit">
+            <div class="box box-orbit"></div>
+          </div>
+        </div>
+        <div class="card-copy">
+          <span class="label">03 / Rotation</span>
+          <h2>Orbit path</h2>
+          <p>A parent rotates while the child holds its shape, showing how composition can make simple motion feel richer.</p>
+        </div>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
