@@ -4,28 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Box Animations</title>
-  <meta name="description" content="A compact CSS motion lab with keyframes, nested boxes, timing, rhythm, and reduced-motion support.">
+  <meta name="description" content="An interactive CSS motion lab with keyframes, timing controls, copyable snippets, theme presets, and reduced-motion support.">
   <link rel="canonical" href="https://abdimannor.github.io/box-animations/">
   <meta property="og:title" content="Box Animations">
-  <meta property="og:description" content="A compact CSS motion lab with keyframes, nested boxes, timing, rhythm, and reduced-motion support.">
+  <meta property="og:description" content="An interactive CSS motion lab with keyframes, timing controls, copyable snippets, theme presets, and reduced-motion support.">
   <meta property="og:url" content="https://abdimannor.github.io/box-animations/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Box Animations">
-  <meta name="twitter:description" content="A compact CSS motion lab with keyframes, nested boxes, timing, rhythm, and reduced-motion support.">
+  <meta name="twitter:description" content="An interactive CSS motion lab with keyframes, timing controls, copyable snippets, theme presets, and reduced-motion support.">
   <meta name="theme-color" content="#101827">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="theme-paper">
   <main class="page-shell">
     <section class="hero" aria-labelledby="page-title">
       <div>
         <p class="eyebrow">CSS Motion Lab</p>
         <h1 id="page-title">Box Animations</h1>
-        <p class="lead">Three small animation studies built with plain HTML and CSS: slide, pulse, and orbit.</p>
+        <p class="lead">An interactive playground for testing CSS motion patterns: slide, pulse, orbit, timing, themes, and accessible motion settings.</p>
       </div>
       <a class="source-link" href="https://github.com/abdimannor/box-animations" target="_blank" rel="noopener">GitHub</a>
     </section>
+
+    <section class="control-panel" aria-label="Animation controls">
+      <div class="control-group">
+        <span class="control-label">Motion</span>
+        <button class="control-button" id="toggle-motion" type="button" aria-pressed="false">Pause</button>
+      </div>
+
+      <label class="control-group" for="speed-control">
+        <span class="control-label">Speed</span>
+        <span class="range-row">
+          <input id="speed-control" type="range" min="0.5" max="2" step="0.25" value="1">
+          <output id="speed-output" for="speed-control">1x</output>
+        </span>
+      </label>
+
+      <label class="control-group" for="theme-control">
+        <span class="control-label">Theme</span>
+        <select id="theme-control">
+          <option value="paper">Paper</option>
+          <option value="night">Night</option>
+          <option value="signal">Signal</option>
+        </select>
+      </label>
+    </section>
+
+    <noscript>
+      <p class="fallback-note">Controls need JavaScript, but the CSS animations and examples still work without it.</p>
+    </noscript>
 
     <section class="lab-grid" aria-label="Animation examples">
       <article class="motion-card">
@@ -37,7 +65,7 @@
         <div class="card-copy">
           <span class="label">01 / Translate</span>
           <h2>Sliding box</h2>
-          <p>A nested box moves across its parent using `transform`, keeping layout stable while the visual layer moves.</p>
+          <p>A nested box moves across its parent with <code>transform</code>, keeping layout stable while the visual layer moves.</p>
         </div>
       </article>
 
@@ -49,7 +77,7 @@
         <div class="card-copy">
           <span class="label">02 / Scale</span>
           <h2>Pulse timing</h2>
-          <p>Two elements share the same keyframes with different delays, creating rhythm without extra markup logic.</p>
+          <p>Two elements share the same keyframes with staggered delays, creating rhythm without extra markup logic.</p>
         </div>
       </article>
 
@@ -66,6 +94,71 @@
         </div>
       </article>
     </section>
+
+    <section class="snippet-section" aria-labelledby="snippets-title">
+      <div class="section-heading">
+        <p class="eyebrow">Reusable patterns</p>
+        <h2 id="snippets-title">Copyable CSS snippets</h2>
+      </div>
+
+      <div class="snippet-grid">
+        <article class="snippet-card">
+          <div class="snippet-topline">
+            <h3>Translate</h3>
+            <button class="copy-button" type="button" data-copy-target="snippet-slide">Copy</button>
+          </div>
+          <pre><code id="snippet-slide">.box {
+  animation: slideBox 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes slideBox {
+  to { transform: translateX(calc(100% - 66px)); }
+}</code></pre>
+        </article>
+
+        <article class="snippet-card">
+          <div class="snippet-topline">
+            <h3>Pulse</h3>
+            <button class="copy-button" type="button" data-copy-target="snippet-pulse">Copy</button>
+          </div>
+          <pre><code id="snippet-pulse">.box {
+  animation: pulseBox 1.7s ease-in-out infinite;
+}
+
+@keyframes pulseBox {
+  50% { opacity: 1; transform: scale(1.18) rotate(8deg); }
+}</code></pre>
+        </article>
+
+        <article class="snippet-card">
+          <div class="snippet-topline">
+            <h3>Orbit</h3>
+            <button class="copy-button" type="button" data-copy-target="snippet-orbit">Copy</button>
+          </div>
+          <pre><code id="snippet-orbit">.orbit {
+  animation: orbitPath 4s linear infinite;
+}
+
+@keyframes orbitPath {
+  to { transform: rotate(360deg); }
+}</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="quality-panel" aria-labelledby="quality-title">
+      <div>
+        <p class="eyebrow">Visual QA</p>
+        <h2 id="quality-title">Motion checklist</h2>
+      </div>
+      <ul>
+        <li>Animations use <code>transform</code> instead of layout-shifting properties.</li>
+        <li>Controls remain reachable on touch screens and keyboard navigation.</li>
+        <li><code>prefers-reduced-motion</code> is respected for visitors who need calmer motion.</li>
+        <li>Theme changes preserve contrast and keep the examples readable.</li>
+      </ul>
+    </section>
   </main>
+  <script src="script.js"></script>
 </body>
 </html>

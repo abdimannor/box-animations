@@ -1,6 +1,6 @@
 # Box Animations
 
-A compact motion lab exploring movement, rhythm, timing, and reduced-motion support. The page contains three small studies: a sliding box, pulsing boxes, and an orbiting element.
+An interactive motion lab exploring movement, rhythm, timing, reduced-motion support, theme presets, and reusable CSS snippets. The page contains three small studies: a sliding box, pulsing boxes, and an orbiting element.
 
 ## Live Demo
 
@@ -19,17 +19,22 @@ A compact motion lab exploring movement, rhythm, timing, and reduced-motion supp
 - [x] Add clearer page copy and metadata
 - [x] Add reduced-motion support
 
-### Phase 3: Next Upgrade
-- [ ] Add controls for speed and pause/play
-- [ ] Add short explanations for each animation principle
-- [ ] Add a no-JavaScript fallback note
-- [ ] Improve mobile spacing and touch readability
+### Phase 3: Interactive Controls
+- [x] Add controls for speed and pause/play
+- [x] Add short explanations for each animation principle
+- [x] Add a no-JavaScript fallback note
+- [x] Improve mobile spacing and touch readability
 
 ### Phase 4: Full Version
-- [ ] Turn the page into an interactive CSS animation playground
-- [ ] Add copyable snippets for each pattern
-- [ ] Add theme presets
-- [ ] Add a small visual test checklist
+- [x] Turn the page into an interactive CSS animation playground
+- [x] Add copyable snippets for each pattern
+- [x] Add theme presets
+- [x] Add a small visual test checklist
+
+### Phase 5: Future Polish
+- [ ] Add a live custom keyframe editor
+- [ ] Add exportable CSS variables for each preset
+- [ ] Add a visual comparison mode for easing curves
 
 ## License
 
