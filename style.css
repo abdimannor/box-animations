@@ -173,7 +173,7 @@
     border: 1px solid var(--line);
     container-type: inline-size;
   }
-  .box-slide { background: var(--a1); border-radius: 50%; }
+  .box-slide { background: var(--a1); }
   .box-pulse { grid-area: 1 / 1; background: var(--a2); }
   .box-pulse.delay { background: var(--a3); mix-blend-mode: multiply; }
   .theme-night .box-pulse.delay { mix-blend-mode: screen; }
@@ -237,4 +237,24 @@
     .hero { grid-template-columns: 1fr; justify-items: start; }
     .control-panel { border-radius: var(--radius); padding: 1rem; }
   }
+}
+
+/* Every animation lives here, gated once by prefers-reduced-motion. */
+@layer motion {
+  @media (prefers-reduced-motion: no-preference) {
+    .box-slide { animation: slideBox var(--slide-duration) cubic-bezier(0.65, 0, 0.35, 1) infinite alternate; }
+    .box-pulse { animation: pulseBox var(--pulse-duration) ease-in-out infinite; }
+    .box-pulse.delay { animation-delay: 0.42s; }
+    .orbit { animation: orbitPath var(--orbit-duration) linear infinite; }
+    .box-orbit { animation: orbitPath var(--orbit-duration) linear infinite reverse; }
+    .is-paused .stage * { animation-play-state: paused; }
+    .source-link, .control-button, .copy-button { transition: background-color 0.2s, color 0.2s; }
+  }
+
+  @keyframes slideBox { to { translate: calc(100cqi - var(--box)); } }
+  @keyframes pulseBox {
+    0%, 100% { opacity: 0.5; scale: 0.78; rotate: 0deg; }
+    50% { opacity: 1; scale: 1.18; rotate: 8deg; }
+  }
+  @keyframes orbitPath { to { rotate: 360deg; } }
 }
