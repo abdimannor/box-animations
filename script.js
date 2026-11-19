@@ -4,7 +4,7 @@ const motionButton = document.querySelector("#toggle-motion");
 const speedControl = document.querySelector("#speed-control");
 const speedOutput = document.querySelector("#speed-output");
 const themeControl = document.querySelector("#theme-control");
-const themes = ["paper", "night", "signal"];
+const themes = ["night", "paper", "signal"];
 const durations = { slide: 2.2, pulse: 1.7, orbit: 4 };
 
 const setSpeed = (value) => {
