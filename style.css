@@ -451,5 +451,12 @@ pre code {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .source-link:hover,
+  .control-button:hover,
+  .copy-button:hover {
+    transform: none;
   }
 }
