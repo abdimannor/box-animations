@@ -226,12 +226,11 @@
   .quality-panel ul { counter-reset: check; }
   .quality-panel li {
     counter-increment: check;
-    display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    padding-block: 0.9rem;
+    position: relative;
+    padding: 0.9rem 0 0.9rem 2.75rem;
     border-block-end: 1px solid var(--line);
   }
-  .quality-panel li::before { content: counter(check, decimal-leading-zero); font: 600 var(--step--1)/2 var(--mono); color: var(--a3); }
+  .quality-panel li::before { content: counter(check, decimal-leading-zero); position: absolute; inset-inline-start: 0; inset-block-start: 0.9rem; font: 600 var(--step--1)/1.9 var(--mono); color: var(--a3); }
 
   @media (width < 40rem) {
     .hero { grid-template-columns: 1fr; justify-items: start; }
