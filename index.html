@@ -18,11 +18,11 @@
   <meta name="twitter:image" content="https://abdimannor.github.io/box-animations/og.png">
   <meta name="twitter:title" content="Box Animations">
   <meta name="twitter:description" content="An interactive CSS motion lab with keyframes, timing controls, copyable snippets, theme presets, and reduced-motion support.">
-  <meta name="theme-color" content="#101827">
+  <meta name="theme-color" content="#121316">
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="theme-paper">
+<body class="theme-night">
   <main class="page-shell">
     <section class="hero" aria-labelledby="page-title">
       <div>
@@ -39,22 +39,22 @@
         <button class="control-button" id="toggle-motion" type="button" aria-pressed="false">Pause</button>
       </div>
 
-      <label class="control-group" for="speed-control">
-        <span class="control-label">Speed</span>
+      <div class="control-group">
+        <label class="control-label" for="speed-control">Speed</label>
         <span class="range-row">
           <input id="speed-control" type="range" min="0.5" max="2" step="0.25" value="1">
           <output id="speed-output" for="speed-control">1x</output>
         </span>
-      </label>
+      </div>
 
-      <label class="control-group" for="theme-control">
-        <span class="control-label">Theme</span>
+      <div class="control-group">
+        <label class="control-label" for="theme-control">Theme</label>
         <select id="theme-control">
-          <option value="paper">Paper</option>
           <option value="night">Night</option>
+          <option value="paper">Paper</option>
           <option value="signal">Signal</option>
         </select>
-      </label>
+      </div>
     </section>
 
     <noscript>
@@ -165,6 +165,9 @@
       </ul>
     </section>
   </main>
-  <script src="script.js"></script>
+  <footer class="site-footer">
+    <p>&copy; 2026 Mahad Abdullahi</p>
+  </footer>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
