@@ -25,6 +25,11 @@ motionButton.addEventListener("click", () => {
   const paused = body.classList.toggle("is-paused");
   motionButton.setAttribute("aria-pressed", String(paused));
   motionButton.textContent = paused ? "Play" : "Pause";
+  // A scrubbed demo is driven by the Web Animations API, which overrides
+  // animation-play-state, so pause and play through the API as well.
+  for (const el of document.querySelectorAll(".stage, .pg-stage")) {
+    for (const anim of el.getAnimations({ subtree: true })) paused ? anim.pause() : anim.play();
+  }
 });
 
 speedControl.addEventListener("input", (event) => setSpeed(event.target.value));
