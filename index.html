@@ -20,6 +20,17 @@
   <meta name="twitter:description" content="An interactive CSS motion lab with keyframes, timing controls, copyable snippets, theme presets, and reduced-motion support.">
   <meta name="theme-color" content="#121316">
   <link rel="icon" href="data:,">
+  <script>
+    // Decide motion before first paint: a saved choice wins, otherwise the OS setting.
+    (() => {
+      let saved = null;
+      try { saved = localStorage.getItem("boxAnimationsMotion"); } catch {}
+      const system = matchMedia("(prefers-reduced-motion: reduce)").matches ? "off" : "on";
+      const root = document.documentElement;
+      root.dataset.motion = saved === "on" || saved === "off" ? saved : system;
+      root.dataset.motionSource = saved ? "visitor" : "system";
+    })();
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-night">
@@ -35,7 +46,7 @@
 
     <section class="control-panel" aria-label="Animation controls">
       <div class="control-group">
-        <span class="control-label">Motion</span>
+        <button class="control-button motion-switch" id="motion-switch" type="button" role="switch" aria-checked="true"><span class="switch-track" aria-hidden="true"></span><span>Animations: <span class="motion-state">on</span></span></button>
         <button class="control-button" id="toggle-motion" type="button" aria-pressed="false">Pause</button>
       </div>
 
@@ -61,6 +72,11 @@
       <p class="fallback-note">Controls need JavaScript, but the CSS animations and examples still work without it.</p>
     </noscript>
 
+    <div class="motion-notice" id="motion-notice" role="status" hidden>
+      <p>Your system asks for reduced motion, so the demos are paused.</p>
+      <button type="button" data-motion-play>Play them anyway</button>
+    </div>
+
     <section class="lab-grid" aria-label="Animation examples">
       <article class="motion-card">
         <div class="stage stage-slide" aria-hidden="true">
@@ -68,9 +84,14 @@
             <div class="box box-slide"></div>
           </div>
         </div>
+        <div class="scrub" data-scrub>
+          <button class="scrub-play" type="button" aria-describedby="title-slide">Pause</button>
+          <input class="scrub-range" type="range" min="0" max="1000" step="1" value="0" aria-label="Timeline, sliding box">
+          <output class="scrub-time" aria-hidden="true">0.00s</output>
+        </div>
         <div class="card-copy">
           <span class="label">01 / Translate</span>
-          <h2>Sliding box</h2>
+          <h2 id="title-slide">Sliding box</h2>
           <p>A nested box moves across its parent with <code>transform</code>, keeping layout stable while the visual layer moves.</p>
         </div>
       </article>
@@ -80,9 +101,14 @@
           <div class="box box-pulse"></div>
           <div class="box box-pulse delay"></div>
         </div>
+        <div class="scrub" data-scrub>
+          <button class="scrub-play" type="button" aria-describedby="title-pulse">Pause</button>
+          <input class="scrub-range" type="range" min="0" max="1000" step="1" value="0" aria-label="Timeline, pulse timing">
+          <output class="scrub-time" aria-hidden="true">0.00s</output>
+        </div>
         <div class="card-copy">
           <span class="label">02 / Scale</span>
-          <h2>Pulse timing</h2>
+          <h2 id="title-pulse">Pulse timing</h2>
           <p>Two elements share the same keyframes with staggered delays, creating rhythm without extra markup logic.</p>
         </div>
       </article>
@@ -93,9 +119,14 @@
             <div class="box box-orbit"></div>
           </div>
         </div>
+        <div class="scrub" data-scrub>
+          <button class="scrub-play" type="button" aria-describedby="title-orbit">Pause</button>
+          <input class="scrub-range" type="range" min="0" max="1000" step="1" value="0" aria-label="Timeline, orbit path">
+          <output class="scrub-time" aria-hidden="true">0.00s</output>
+        </div>
         <div class="card-copy">
           <span class="label">03 / Rotation</span>
-          <h2>Orbit path</h2>
+          <h2 id="title-orbit">Orbit path</h2>
           <p>A parent rotates while the child holds its shape, showing how composition can make simple motion feel richer.</p>
         </div>
       </article>
@@ -161,7 +192,10 @@
             </div>
             <output class="bz-value" id="bz-value">cubic-bezier(0.65, 0, 0.35, 1)</output>
           </fieldset>
-          <button class="control-button pg-replay" type="button" id="pg-replay">Replay</button>
+          <div class="pg-actions">
+            <button class="control-button pg-replay" type="button" id="pg-replay">Replay</button>
+            <button class="control-button pg-replay" type="button" id="pg-link">Copy link</button>
+          </div>
         </div>
 
         <div class="snippet-card pg-code">
@@ -171,6 +205,7 @@
           </div>
           <pre tabindex="0"><code id="pg-css"></code></pre>
           <p class="pg-status" id="pg-status" role="status"></p>
+          <p class="pg-notice" data-motion-notice hidden><span>Animations are paused because of your system setting.</span> <button type="button" data-motion-play>Play them</button></p>
         </div>
       </div>
 
@@ -253,12 +288,11 @@
       </ul>
     </section>
   </main>
-  <footer class="site-footer">
-    <p>&copy; 2026 Mahad Abdullahi</p>
-  </footer>
+  <script type="module" src="motion.js"></script>
   <script type="module" src="script.js"></script>
   <script type="module" src="playground.js"></script>
   <script type="module" src="bezier.js"></script>
   <script type="module" src="race.js"></script>
+  <script type="module" src="scrub.js"></script>
 </body>
 </html>

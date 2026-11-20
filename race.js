@@ -1,9 +1,9 @@
 // Race lane: the same distance and duration, five timing functions side by side.
 import { state } from "./playground.js";
+import { motionOn } from "./motion.js";
 
 const lanes = document.querySelector("#race-lanes");
 const go = document.querySelector("#race-go");
-const reduce = matchMedia("(prefers-reduced-motion: reduce)");
 
 const sync = () => {
   for (const lane of lanes.children) {
@@ -15,7 +15,7 @@ const sync = () => {
 
 const run = () => {
   sync();
-  if (reduce.matches) {
+  if (!motionOn()) {
     lanes.classList.add("is-finished");
     return;
   }

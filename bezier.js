@@ -1,5 +1,5 @@
 // Draggable cubic-bezier editor. Writes the easing into the playground state.
-import { state, render, replay } from "./playground.js";
+import { state, render, replay, initialEase } from "./playground.js";
 
 const svg = document.querySelector("#bz");
 const h = [document.querySelector("#bz-h1"), document.querySelector("#bz-h2")];
@@ -11,6 +11,11 @@ const presets = document.querySelector("#bz-presets");
 const pts = [[0.65, 0], [0.35, 1]];
 const clampX = (v) => Math.min(1, Math.max(0, v));
 const clampY = (v) => Math.min(1.6, Math.max(-0.6, v));
+const setPts = (v) => {
+  pts[0] = [clampX(v[0]), clampY(v[1])];
+  pts[1] = [clampX(v[2]), clampY(v[3])];
+};
+if (initialEase) setPts(initialEase);
 const round = (v) => Math.round(v * 100) / 100;
 const toSvg = ([x, y]) => [x * 200, 200 - y * 200];
 
@@ -49,6 +54,7 @@ h.forEach((handle, i) => {
   handle.addEventListener("pointermove", (event) => {
     if (!handle.hasPointerCapture(event.pointerId)) return;
     pts[i] = fromEvent(event);
+    state.touched = true;
     draw();
   });
   handle.addEventListener("pointerup", () => { handle.classList.remove("is-dragging"); replay(); });
@@ -59,6 +65,7 @@ h.forEach((handle, i) => {
     if (!move) return;
     event.preventDefault();
     pts[i] = [clampX(pts[i][0] + move[0]), clampY(pts[i][1] + move[1])];
+    state.touched = true;
     draw();
     replay();
   });
@@ -67,11 +74,15 @@ h.forEach((handle, i) => {
 presets.addEventListener("click", (event) => {
   const btn = event.target.closest("[data-ease]");
   if (!btn) return;
-  const v = btn.dataset.ease.split(",").map(Number);
-  pts[0] = [v[0], v[1]];
-  pts[1] = [v[2], v[3]];
+  setPts(btn.dataset.ease.split(",").map(Number));
+  state.touched = true;
   draw();
   replay();
+});
+
+document.addEventListener("pgload", (event) => {
+  if (event.detail) setPts(event.detail);
+  draw();
 });
 
 draw();

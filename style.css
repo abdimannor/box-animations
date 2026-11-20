@@ -243,14 +243,6 @@
   }
   .quality-panel li::before { content: counter(check, decimal-leading-zero); position: absolute; inset-inline-start: 0; inset-block-start: 0.9rem; font: 600 var(--step--1)/1.9 var(--mono); color: var(--a3); }
 
-  /* Footer */
-  .site-footer {
-    inline-size: min(76rem, 100% - 2 * clamp(1rem, 4vw, 3rem));
-    margin-inline: auto;
-    padding-block: 0 var(--space-m);
-    font-size: var(--step--1);
-    color: var(--muted);
-  }
 
   @media (width < 40rem) {
     .hero { grid-template-columns: 1fr; justify-items: start; }
@@ -260,7 +252,9 @@
 
 /* Every animation lives here, gated once by prefers-reduced-motion. */
 @layer motion {
-  @media (prefers-reduced-motion: no-preference) {
+  /* The motion switch writes data-motion="on|off" on <html>. Without
+     JavaScript the attribute is missing and the OS setting decides. */
+  :root[data-motion="on"] {
     .box-slide { animation: slideBox var(--slide-duration) cubic-bezier(0.65, 0, 0.35, 1) infinite alternate; }
     .box-pulse { animation: pulseBox var(--pulse-duration) ease-in-out infinite; }
     .box-pulse.delay { animation-delay: 0.42s; }
@@ -268,6 +262,15 @@
     .box-orbit { animation: orbitPath var(--orbit-duration) linear infinite reverse; }
     .is-paused .stage * { animation-play-state: paused; }
     .source-link, .control-button, .copy-button { transition: background-color 0.2s, color 0.2s; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    :root:not([data-motion]) {
+      .box-slide { animation: slideBox 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate; }
+      .box-pulse { animation: pulseBox 1.7s ease-in-out infinite; }
+      .box-pulse.delay { animation-delay: 0.42s; }
+      .orbit { animation: orbitPath 4s linear infinite; }
+      .box-orbit { animation: orbitPath 4s linear infinite reverse; }
+    }
   }
 
   @keyframes slideBox { to { translate: calc(100cqi - var(--box)); } }
@@ -350,7 +353,7 @@
 }
 
 @layer motion {
-  @media (prefers-reduced-motion: no-preference) {
+  :root[data-motion="on"] {
     .pg-box.is-running {
       animation: var(--pg-name) var(--pg-duration) var(--pg-easing) var(--pg-delay) var(--pg-iterations) var(--pg-direction) var(--pg-fill);
     }
@@ -432,10 +435,65 @@
 }
 
 @layer motion {
-  @media (prefers-reduced-motion: no-preference) {
+  :root[data-motion="on"] {
     .race-lanes.is-racing li > i { animation: raceRun 2s var(--race-ease) 0.2s both; }
   }
   @keyframes raceRun {
     to { translate: calc(100cqi - 6.5rem - 0.75rem - 2.6rem); }
   }
+}
+
+/* Motion switch and the reduced-motion notice */
+@layer components {
+  .motion-switch { display: inline-flex; align-items: center; gap: 0.5em; }
+  .motion-switch .switch-track {
+    position: relative; inline-size: 2.4em; block-size: 1.35em; border-radius: 999px;
+    background: color-mix(in oklab, var(--ink) 35%, var(--bg)); flex: none;
+  }
+  .motion-switch .switch-track::after {
+    content: ""; position: absolute; inset-block-start: 0.18em; inset-inline-start: 0.18em;
+    inline-size: 1em; block-size: 1em; border-radius: 50%; background: var(--bg);
+  }
+  .control-button.motion-switch[aria-checked="true"] { background: var(--a1); color: #111; }
+  .motion-switch[aria-checked="true"] .switch-track { background: #111; }
+  .motion-switch[aria-checked="true"] .switch-track::after { inset-inline-start: 1.23em; background: var(--a1); }
+  .theme-night .control-panel .control-button.motion-switch[aria-checked="true"] { box-shadow: none; }
+
+  .motion-notice {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: var(--space-s) var(--space-m);
+    padding: 1rem 1rem 1rem 1.4rem;
+    border-radius: var(--radius);
+    background: repeating-linear-gradient(-45deg, var(--a1) 0 14px, color-mix(in oklab, var(--a1) 80%, #000) 14px 28px);
+    color: #111;
+    font-weight: 650;
+  }
+  .motion-notice p { background: var(--a1); padding: 0.2em 0.5em; border-radius: 0.4em; }
+  .motion-notice[hidden], .pg-notice[hidden] { display: none; }
+  .motion-notice button, .pg-notice button {
+    padding: 0.55em 1.3em; border: 0; border-radius: 999px; background: #111; color: #fff;
+    font-weight: 700; cursor: pointer;
+  }
+  .pg-notice { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-block-start: 0.75rem; color: var(--muted); }
+  .pg-notice button { background: var(--a1); color: #111; }
+}
+
+/* Timeline scrubbers */
+@layer components {
+  .scrub {
+    display: grid; grid-template-columns: auto 1fr 4.5ch; align-items: center; gap: 0.75rem;
+    padding: 0.6rem 0.9rem; border-block-start: 1px solid var(--line);
+  }
+  .scrub-range { inline-size: 100%; accent-color: var(--a1); }
+  .scrub-play {
+    padding: 0.35em 1em; border: 0; border-radius: 999px; background: var(--ink); color: var(--bg);
+    font-weight: 650; cursor: pointer; min-inline-size: 5.2em;
+  }
+  .scrub :disabled { opacity: 0.45; cursor: not-allowed; }
+  .scrub-time { font: 600 var(--step--1) var(--mono); color: var(--muted); text-align: end; }
+  .is-scrubbing .stage { outline: 2px dashed var(--a1); outline-offset: -6px; }
+}
+
+@layer components {
+  .pg-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 }
