@@ -1,10 +1,10 @@
 // Keyframe playground: live controls write CSS custom properties and a code panel.
+import { motionOn } from "./motion.js";
 const form = document.querySelector("#pg-form");
 const track = document.querySelector(".pg-track");
 const box = document.querySelector(".pg-box");
 const code = document.querySelector("#pg-css");
 const status = document.querySelector("#pg-status");
-const reduce = matchMedia("(prefers-reduced-motion: reduce)");
 
 const keyframes = {
   slide: "@keyframes slideBox {\n  to { translate: calc(100cqi - var(--box)); }\n}",
@@ -47,7 +47,7 @@ export const render = () => {
   };
   for (const [k, val] of Object.entries(props)) box.style.setProperty(k, val);
   code.textContent = `.box {\n  animation-name: ${names[v.anim]};\n  animation-duration: ${v.duration};\n  animation-timing-function: ${state.easing};\n  animation-delay: ${v.delay};\n  animation-iteration-count: ${v.iterations};\n  animation-direction: ${v.direction};\n  animation-fill-mode: ${v.fill};\n}\n\n${keyframes[v.anim]}`;
-  status.textContent = reduce.matches ? "Reduced motion is on: the preview stays still, the CSS still updates." : "";
+  status.textContent = motionOn() ? "" : "Animations are off: the preview stays still, the CSS still updates.";
 };
 
 export const replay = () => {
@@ -58,6 +58,6 @@ export const replay = () => {
 
 form.addEventListener("input", () => { render(); replay(); });
 document.querySelector("#pg-replay").addEventListener("click", replay);
-reduce.addEventListener("change", render);
+document.addEventListener("motionchange", () => { render(); replay(); });
 render();
 replay();
