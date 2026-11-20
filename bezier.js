@@ -10,7 +10,7 @@ const presets = document.querySelector("#bz-presets");
 
 const pts = [[0.65, 0], [0.35, 1]];
 const clampX = (v) => Math.min(1, Math.max(0, v));
-const clampY = (v) => Math.min(1.8, Math.max(-0.8, v));
+const clampY = (v) => Math.min(1.6, Math.max(-0.6, v));
 const round = (v) => Math.round(v * 100) / 100;
 const toSvg = ([x, y]) => [x * 200, 200 - y * 200];
 

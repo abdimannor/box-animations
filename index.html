@@ -114,7 +114,7 @@
           </div>
         </div>
 
-        <form class="pg-controls" id="pg-form" aria-label="Animation properties">
+        <div class="pg-controls" id="pg-form" role="group" aria-label="Animation properties">
           <fieldset class="pg-pick">
             <legend class="control-label">Animation</legend>
             <label><input type="radio" name="anim" value="slide" checked> Slide</label>
@@ -123,13 +123,13 @@
           </fieldset>
           <label class="pg-field"><span class="control-label">Duration</span>
             <input type="range" name="duration" min="0.2" max="6" step="0.1" value="2.2">
-            <output name="durationOut">2.2s</output></label>
+            <span class="pg-out" data-out="duration">2.2s</span></label>
           <label class="pg-field"><span class="control-label">Delay</span>
             <input type="range" name="delay" min="0" max="3" step="0.1" value="0">
-            <output name="delayOut">0s</output></label>
+            <span class="pg-out" data-out="delay">0s</span></label>
           <label class="pg-field"><span class="control-label">Iterations</span>
             <input type="range" name="iterations" min="1" max="11" step="1" value="11">
-            <output name="iterationsOut">infinite</output></label>
+            <span class="pg-out" data-out="iterations">infinite</span></label>
           <label class="pg-field"><span class="control-label">Direction</span>
             <select name="direction">
               <option>normal</option><option>reverse</option><option selected>alternate</option><option>alternate-reverse</option>
@@ -140,7 +140,7 @@
             </select></label>
           <fieldset class="pg-ease">
             <legend class="control-label">Easing</legend>
-            <svg class="bz" id="bz" viewBox="-10 -60 220 320" role="group" aria-label="Cubic-bezier editor: drag the two handles, or focus one and use the arrow keys">
+            <svg class="bz" id="bz" viewBox="-12 -125 224 450" role="group" aria-label="Cubic-bezier editor: drag the two handles, or focus one and use the arrow keys">
               <rect class="bz-frame" x="0" y="0" width="200" height="200"/>
               <path class="bz-diag" d="M0 200 L200 0"/>
               <line class="bz-arm" id="bz-arm1"/>
@@ -162,7 +162,7 @@
             <output class="bz-value" id="bz-value">cubic-bezier(0.65, 0, 0.35, 1)</output>
           </fieldset>
           <button class="control-button pg-replay" type="button" id="pg-replay">Replay</button>
-        </form>
+        </div>
 
         <div class="snippet-card pg-code">
           <div class="snippet-topline">
@@ -173,6 +173,20 @@
           <p class="pg-status" id="pg-status" role="status"></p>
         </div>
       </div>
+
+      <section class="race" aria-labelledby="race-title">
+        <div class="race-head">
+          <h3 id="race-title">Compare easings</h3>
+          <button class="control-button" type="button" id="race-go">Race</button>
+        </div>
+        <ol class="race-lanes" id="race-lanes">
+          <li data-ease="linear"><span>linear</span><i class="race-runner"></i></li>
+          <li data-ease="ease"><span>ease</span><i class="race-runner"></i></li>
+          <li data-ease="cubic-bezier(0.65, 0, 0.35, 1)"><span>in-out</span><i class="race-runner"></i></li>
+          <li data-ease="cubic-bezier(0.34, 1.56, 0.64, 1)"><span>back-out</span><i class="race-runner"></i></li>
+          <li data-ease="custom" class="race-custom"><span>yours</span><i class="race-runner"></i></li>
+        </ol>
+      </section>
     </section>
 
     <section class="snippet-section" aria-labelledby="snippets-title">
@@ -245,5 +259,6 @@
   <script type="module" src="script.js"></script>
   <script type="module" src="playground.js"></script>
   <script type="module" src="bezier.js"></script>
+  <script type="module" src="race.js"></script>
 </body>
 </html>

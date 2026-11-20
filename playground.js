@@ -15,24 +15,26 @@ const names = { slide: "slideBox", pulse: "pulseBox", orbit: "orbitPath" };
 
 export const state = { easing: "cubic-bezier(0.65, 0, 0.35, 1)" };
 
+const field = (name) => form.querySelector(`[name="${name}"]:is(:checked, select, [type="range"])`).value;
+const show = (name, value) => { form.querySelector(`[data-out="${name}"]`).textContent = value; };
+
 const read = () => {
-  const data = new FormData(form);
-  const iterations = Number(data.get("iterations"));
+  const iterations = Number(field("iterations"));
   return {
-    anim: data.get("anim"),
-    duration: `${Number(data.get("duration"))}s`,
-    delay: `${Number(data.get("delay"))}s`,
+    anim: field("anim"),
+    duration: `${Number(field("duration"))}s`,
+    delay: `${Number(field("delay"))}s`,
     iterations: iterations > 10 ? "infinite" : String(iterations),
-    direction: data.get("direction"),
-    fill: data.get("fill"),
+    direction: field("direction"),
+    fill: field("fill"),
   };
 };
 
 export const render = () => {
   const v = read();
-  form.elements.durationOut.value = v.duration;
-  form.elements.delayOut.value = v.delay;
-  form.elements.iterationsOut.value = v.iterations;
+  show("duration", v.duration);
+  show("delay", v.delay);
+  show("iterations", v.iterations);
   track.dataset.anim = v.anim;
   const props = {
     "--pg-name": names[v.anim],
