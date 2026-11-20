@@ -383,6 +383,8 @@
   }
   .bz-presets button[aria-pressed="true"] { background: var(--a3); border-color: var(--a3); color: #111; }
   .bz-value { font-size: var(--step--1); color: var(--a2); }
+  /* Yellow text fails contrast on the light themes: darken it toward the ink colour. */
+  .theme-paper .bz-value, .theme-signal .bz-value { color: color-mix(in oklab, var(--a2) 40%, var(--ink)); }
 }
 
 /* Easing race */
