@@ -13,7 +13,7 @@ const keyframes = {
 };
 const names = { slide: "slideBox", pulse: "pulseBox", orbit: "orbitPath" };
 
-export const state = { easing: "cubic-bezier(0.65, 0, 0.35, 1)" };
+export const state = { easing: "cubic-bezier(0.65, 0, 0.35, 1)", touched: false };
 
 const field = (name) => form.querySelector(`[name="${name}"]:is(:checked, select, [type="range"])`).value;
 const show = (name, value) => { form.querySelector(`[data-out="${name}"]`).textContent = value; };
@@ -47,8 +47,50 @@ export const render = () => {
   };
   for (const [k, val] of Object.entries(props)) box.style.setProperty(k, val);
   code.textContent = `.box {\n  animation-name: ${names[v.anim]};\n  animation-duration: ${v.duration};\n  animation-timing-function: ${state.easing};\n  animation-delay: ${v.delay};\n  animation-iteration-count: ${v.iterations};\n  animation-direction: ${v.direction};\n  animation-fill-mode: ${v.fill};\n}\n\n${keyframes[v.anim]}`;
+  if (state.touched) history.replaceState(null, "", `#${shareParams(v)}`);
   status.textContent = motionOn() ? "" : "Animations are off: the preview stays still, the CSS still updates.";
 };
+
+// Shareable state: the URL hash carries every playground setting, e.g.
+// #anim=pulse&duration=1.5&delay=0&iterations=11&direction=alternate&fill=both&ease=0.34,1.56,0.64,1
+const shareParams = (v) => {
+  const ease = state.easing.match(/-?[\d.]+/g) ?? [];
+  return new URLSearchParams({
+    anim: v.anim,
+    duration: parseFloat(v.duration),
+    delay: parseFloat(v.delay),
+    iterations: field("iterations"),
+    direction: v.direction,
+    fill: v.fill,
+    ease: ease.join(","),
+  }).toString().replaceAll("%2C", ",");
+};
+
+const setField = (name, value) => {
+  if (value == null) return;
+  if (name === "anim") {
+    const radio = form.querySelector(`[name="anim"][value="${CSS.escape(value)}"]`);
+    if (radio) radio.checked = true;
+    return;
+  }
+  const input = form.querySelector(`[name="${name}"]`);
+  if (input.tagName === "SELECT") {
+    if ([...input.options].some((o) => o.value === value)) input.value = value;
+  } else if (Number.isFinite(Number(value)) && value !== "") {
+    input.value = value; // the browser clamps range inputs to min/max/step
+  }
+};
+
+// Returns the four bezier numbers from the hash, or null when absent or malformed.
+export const loadFromHash = () => {
+  const params = new URLSearchParams(location.hash.slice(1));
+  if (![...params.keys()].length) return null;
+  for (const name of ["anim", "duration", "delay", "iterations", "direction", "fill"]) setField(name, params.get(name));
+  const ease = (params.get("ease") ?? "").split(",").map(Number);
+  return ease.length === 4 && ease.every(Number.isFinite) ? ease : null;
+};
+
+export const initialEase = loadFromHash();
 
 export const replay = () => {
   box.classList.remove("is-running");
@@ -56,7 +98,26 @@ export const replay = () => {
   box.classList.add("is-running");
 };
 
-form.addEventListener("input", () => { render(); replay(); });
+form.addEventListener("input", () => { state.touched = true; render(); replay(); });
+
+const copyLink = document.querySelector("#pg-link");
+copyLink.addEventListener("click", async () => {
+  state.touched = true;
+  render();
+  try {
+    await navigator.clipboard.writeText(location.href);
+    status.textContent = "Link copied: it opens the playground with these settings.";
+  } catch {
+    status.textContent = `Share this link: ${location.href}`;
+  }
+});
+
+addEventListener("hashchange", () => {
+  const ease = loadFromHash();
+  document.dispatchEvent(new CustomEvent("pgload", { detail: ease }));
+  render();
+  replay();
+});
 document.querySelector("#pg-replay").addEventListener("click", replay);
 document.addEventListener("motionchange", () => { render(); replay(); });
 render();
