@@ -383,6 +383,8 @@
   }
   .bz-presets button[aria-pressed="true"] { background: var(--a3); border-color: var(--a3); color: #111; }
   .bz-value { font-size: var(--step--1); color: var(--a2); }
+  /* Yellow text fails contrast on the light themes: darken it toward the ink colour. */
+  .theme-paper .bz-value, .theme-signal .bz-value { color: color-mix(in oklab, var(--a2) 40%, var(--ink)); }
 }
 
 /* Easing race */
@@ -422,6 +424,7 @@
   }
   .race-custom .race-runner { background: var(--a1); box-shadow: 0 0 1.4rem -0.1rem var(--a1); }
   .race-custom span { color: var(--a1); }
+  .theme-paper .race-custom span, .theme-signal .race-custom span { color: color-mix(in oklab, var(--a1) 70%, var(--ink)); }
   .race-lanes li { container-type: inline-size; }
   .race-lanes li > i { justify-self: start; }
   .race-lanes.is-finished li > i { translate: var(--race-end); }
