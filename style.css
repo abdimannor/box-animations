@@ -424,6 +424,7 @@
   }
   .race-custom .race-runner { background: var(--a1); box-shadow: 0 0 1.4rem -0.1rem var(--a1); }
   .race-custom span { color: var(--a1); }
+  .theme-paper .race-custom span, .theme-signal .race-custom span { color: color-mix(in oklab, var(--a1) 70%, var(--ink)); }
   .race-lanes li { container-type: inline-size; }
   .race-lanes li > i { justify-self: start; }
   .race-lanes.is-finished li > i { translate: var(--race-end); }
