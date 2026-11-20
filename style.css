@@ -477,3 +477,19 @@
   .pg-notice { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-block-start: 0.75rem; color: var(--muted); }
   .pg-notice button { background: var(--a1); color: #111; }
 }
+
+/* Timeline scrubbers */
+@layer components {
+  .scrub {
+    display: grid; grid-template-columns: auto 1fr 4.5ch; align-items: center; gap: 0.75rem;
+    padding: 0.6rem 0.9rem; border-block-start: 1px solid var(--line);
+  }
+  .scrub-range { inline-size: 100%; accent-color: var(--a1); }
+  .scrub-play {
+    padding: 0.35em 1em; border: 0; border-radius: 999px; background: var(--ink); color: var(--bg);
+    font-weight: 650; cursor: pointer; min-inline-size: 5.2em;
+  }
+  .scrub :disabled { opacity: 0.45; cursor: not-allowed; }
+  .scrub-time { font: 600 var(--step--1) var(--mono); color: var(--muted); text-align: end; }
+  .is-scrubbing .stage { outline: 2px dashed var(--a1); outline-offset: -6px; }
+}

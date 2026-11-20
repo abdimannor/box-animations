@@ -84,9 +84,14 @@
             <div class="box box-slide"></div>
           </div>
         </div>
+        <div class="scrub" data-scrub>
+          <button class="scrub-play" type="button" aria-describedby="title-slide">Pause</button>
+          <input class="scrub-range" type="range" min="0" max="1000" step="1" value="0" aria-label="Timeline, sliding box">
+          <output class="scrub-time" aria-hidden="true">0.00s</output>
+        </div>
         <div class="card-copy">
           <span class="label">01 / Translate</span>
-          <h2>Sliding box</h2>
+          <h2 id="title-slide">Sliding box</h2>
           <p>A nested box moves across its parent with <code>transform</code>, keeping layout stable while the visual layer moves.</p>
         </div>
       </article>
@@ -96,9 +101,14 @@
           <div class="box box-pulse"></div>
           <div class="box box-pulse delay"></div>
         </div>
+        <div class="scrub" data-scrub>
+          <button class="scrub-play" type="button" aria-describedby="title-pulse">Pause</button>
+          <input class="scrub-range" type="range" min="0" max="1000" step="1" value="0" aria-label="Timeline, pulse timing">
+          <output class="scrub-time" aria-hidden="true">0.00s</output>
+        </div>
         <div class="card-copy">
           <span class="label">02 / Scale</span>
-          <h2>Pulse timing</h2>
+          <h2 id="title-pulse">Pulse timing</h2>
           <p>Two elements share the same keyframes with staggered delays, creating rhythm without extra markup logic.</p>
         </div>
       </article>
@@ -109,9 +119,14 @@
             <div class="box box-orbit"></div>
           </div>
         </div>
+        <div class="scrub" data-scrub>
+          <button class="scrub-play" type="button" aria-describedby="title-orbit">Pause</button>
+          <input class="scrub-range" type="range" min="0" max="1000" step="1" value="0" aria-label="Timeline, orbit path">
+          <output class="scrub-time" aria-hidden="true">0.00s</output>
+        </div>
         <div class="card-copy">
           <span class="label">03 / Rotation</span>
-          <h2>Orbit path</h2>
+          <h2 id="title-orbit">Orbit path</h2>
           <p>A parent rotates while the child holds its shape, showing how composition can make simple motion feel richer.</p>
         </div>
       </article>
@@ -275,5 +290,6 @@
   <script type="module" src="playground.js"></script>
   <script type="module" src="bezier.js"></script>
   <script type="module" src="race.js"></script>
+  <script type="module" src="scrub.js"></script>
 </body>
 </html>
