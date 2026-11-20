@@ -34,7 +34,10 @@ document.addEventListener("click", async (event) => {
   const button = event.target.closest("[data-copy-target]");
   if (!button) return;
   const target = document.getElementById(button.dataset.copyTarget);
-  const label = button.textContent;
+  // Remember the original label once; a second click within the reset window
+  // would otherwise store "Copied" as the label and never restore it.
+  const label = (button.dataset.label ??= button.textContent);
+  clearTimeout(Number(button.dataset.resetTimer));
   try {
     await navigator.clipboard.writeText(target.textContent);
     button.textContent = "Copied";
@@ -42,7 +45,7 @@ document.addEventListener("click", async (event) => {
     button.textContent = "Select";
     target.closest("pre").focus();
   }
-  setTimeout(() => { button.textContent = label; }, 1300);
+  button.dataset.resetTimer = String(setTimeout(() => { button.textContent = label; }, 1300));
 });
 
 const saved = localStorage.getItem("boxAnimationsTheme");
