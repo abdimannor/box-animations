@@ -138,6 +138,29 @@
             <select name="fill">
               <option>none</option><option>forwards</option><option>backwards</option><option selected>both</option>
             </select></label>
+          <fieldset class="pg-ease">
+            <legend class="control-label">Easing</legend>
+            <svg class="bz" id="bz" viewBox="-10 -60 220 320" role="group" aria-label="Cubic-bezier editor: drag the two handles, or focus one and use the arrow keys">
+              <rect class="bz-frame" x="0" y="0" width="200" height="200"/>
+              <path class="bz-diag" d="M0 200 L200 0"/>
+              <line class="bz-arm" id="bz-arm1"/>
+              <line class="bz-arm" id="bz-arm2"/>
+              <path class="bz-curve" id="bz-curve"/>
+              <circle class="bz-handle bz-h1" id="bz-h1" r="9" tabindex="0" role="slider" aria-label="First control point" aria-valuemin="0" aria-valuemax="1"/>
+              <circle class="bz-handle bz-h2" id="bz-h2" r="9" tabindex="0" role="slider" aria-label="Second control point" aria-valuemin="0" aria-valuemax="1"/>
+            </svg>
+            <div class="bz-presets" id="bz-presets">
+              <button type="button" data-ease="0.25, 0.1, 0.25, 1">ease</button>
+              <button type="button" data-ease="0, 0, 1, 1">linear</button>
+              <button type="button" data-ease="0.42, 0, 1, 1">ease-in</button>
+              <button type="button" data-ease="0, 0, 0.58, 1">ease-out</button>
+              <button type="button" data-ease="0.65, 0, 0.35, 1">in-out</button>
+              <button type="button" data-ease="0.34, 1.56, 0.64, 1">back-out</button>
+              <button type="button" data-ease="0.68, -0.6, 0.32, 1.6">back-in-out</button>
+              <button type="button" data-ease="0.16, 1, 0.3, 1">expo-out</button>
+            </div>
+            <output class="bz-value" id="bz-value">cubic-bezier(0.65, 0, 0.35, 1)</output>
+          </fieldset>
           <button class="control-button pg-replay" type="button" id="pg-replay">Replay</button>
         </form>
 
@@ -221,5 +244,6 @@
   </footer>
   <script type="module" src="script.js"></script>
   <script type="module" src="playground.js"></script>
+  <script type="module" src="bezier.js"></script>
 </body>
 </html>

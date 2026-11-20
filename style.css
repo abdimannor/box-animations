@@ -357,3 +357,30 @@
     .is-paused .pg-box { animation-play-state: paused; }
   }
 }
+
+/* Cubic-bezier editor */
+@layer components {
+  .pg-ease { display: grid; gap: 0.75rem; padding: 0; margin: 0; border: 0; }
+  .pg-ease legend { margin-block-end: 0.5rem; }
+  .bz { inline-size: min(100%, 15rem); justify-self: center; overflow: visible; touch-action: none; }
+  .bz-frame { fill: color-mix(in oklab, var(--a4) 8%, transparent); stroke: var(--line); }
+  .bz-diag { stroke: var(--line); stroke-dasharray: 4 4; fill: none; }
+  .bz-arm { stroke: var(--muted); stroke-width: 1.5; }
+  .bz-curve { fill: none; stroke: var(--a1); stroke-width: 4; stroke-linecap: round; filter: drop-shadow(0 0 6px color-mix(in oklab, var(--a1) 60%, transparent)); }
+  .bz-handle { cursor: grab; stroke: var(--bg); stroke-width: 3; }
+  .bz-h1 { fill: var(--a2); }
+  .bz-h2 { fill: var(--a3); }
+  .bz-handle.is-dragging { cursor: grabbing; }
+  .bz-handle:focus-visible { outline: none; stroke: var(--a4); stroke-width: 5; }
+  .bz-presets { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .bz-presets button {
+    padding: 0.3em 0.8em;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    font: 600 var(--step--1) var(--mono);
+    cursor: pointer;
+  }
+  .bz-presets button[aria-pressed="true"] { background: var(--a3); border-color: var(--a3); color: #111; }
+  .bz-value { font-size: var(--step--1); color: var(--a2); }
+}
