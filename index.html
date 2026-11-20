@@ -101,6 +101,57 @@
       </article>
     </section>
 
+    <section class="playground" id="playground" aria-labelledby="playground-title">
+      <div class="section-heading">
+        <p class="eyebrow">Keyframe playground</p>
+        <h2 id="playground-title">Tune every property</h2>
+      </div>
+
+      <div class="pg-layout">
+        <div class="pg-stage" aria-hidden="true">
+          <div class="pg-track" data-anim="slide">
+            <div class="pg-box"></div>
+          </div>
+        </div>
+
+        <form class="pg-controls" id="pg-form" aria-label="Animation properties">
+          <fieldset class="pg-pick">
+            <legend class="control-label">Animation</legend>
+            <label><input type="radio" name="anim" value="slide" checked> Slide</label>
+            <label><input type="radio" name="anim" value="pulse"> Pulse</label>
+            <label><input type="radio" name="anim" value="orbit"> Orbit</label>
+          </fieldset>
+          <label class="pg-field"><span class="control-label">Duration</span>
+            <input type="range" name="duration" min="0.2" max="6" step="0.1" value="2.2">
+            <output name="durationOut">2.2s</output></label>
+          <label class="pg-field"><span class="control-label">Delay</span>
+            <input type="range" name="delay" min="0" max="3" step="0.1" value="0">
+            <output name="delayOut">0s</output></label>
+          <label class="pg-field"><span class="control-label">Iterations</span>
+            <input type="range" name="iterations" min="1" max="11" step="1" value="11">
+            <output name="iterationsOut">infinite</output></label>
+          <label class="pg-field"><span class="control-label">Direction</span>
+            <select name="direction">
+              <option>normal</option><option>reverse</option><option selected>alternate</option><option>alternate-reverse</option>
+            </select></label>
+          <label class="pg-field"><span class="control-label">Fill mode</span>
+            <select name="fill">
+              <option>none</option><option>forwards</option><option>backwards</option><option selected>both</option>
+            </select></label>
+          <button class="control-button pg-replay" type="button" id="pg-replay">Replay</button>
+        </form>
+
+        <div class="snippet-card pg-code">
+          <div class="snippet-topline">
+            <h3>Live CSS</h3>
+            <button class="copy-button" type="button" data-copy-target="pg-css">Copy</button>
+          </div>
+          <pre tabindex="0"><code id="pg-css"></code></pre>
+          <p class="pg-status" id="pg-status" role="status"></p>
+        </div>
+      </div>
+    </section>
+
     <section class="snippet-section" aria-labelledby="snippets-title">
       <div class="section-heading">
         <p class="eyebrow">Reusable patterns</p>
@@ -169,5 +220,6 @@
     <p>&copy; 2026 Mahad Abdullahi</p>
   </footer>
   <script type="module" src="script.js"></script>
+  <script type="module" src="playground.js"></script>
 </body>
 </html>
