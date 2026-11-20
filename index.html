@@ -20,6 +20,17 @@
   <meta name="twitter:description" content="An interactive CSS motion lab with keyframes, timing controls, copyable snippets, theme presets, and reduced-motion support.">
   <meta name="theme-color" content="#121316">
   <link rel="icon" href="data:,">
+  <script>
+    // Decide motion before first paint: a saved choice wins, otherwise the OS setting.
+    (() => {
+      let saved = null;
+      try { saved = localStorage.getItem("boxAnimationsMotion"); } catch {}
+      const system = matchMedia("(prefers-reduced-motion: reduce)").matches ? "off" : "on";
+      const root = document.documentElement;
+      root.dataset.motion = saved === "on" || saved === "off" ? saved : system;
+      root.dataset.motionSource = saved ? "visitor" : "system";
+    })();
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-night">
@@ -35,7 +46,7 @@
 
     <section class="control-panel" aria-label="Animation controls">
       <div class="control-group">
-        <span class="control-label">Motion</span>
+        <button class="control-button motion-switch" id="motion-switch" type="button" role="switch" aria-checked="true"><span class="switch-track" aria-hidden="true"></span><span>Animations: <span class="motion-state">on</span></span></button>
         <button class="control-button" id="toggle-motion" type="button" aria-pressed="false">Pause</button>
       </div>
 
@@ -60,6 +71,11 @@
     <noscript>
       <p class="fallback-note">Controls need JavaScript, but the CSS animations and examples still work without it.</p>
     </noscript>
+
+    <div class="motion-notice" id="motion-notice" role="status" hidden>
+      <p>Your system asks for reduced motion, so the demos are paused.</p>
+      <button type="button" data-motion-play>Play them anyway</button>
+    </div>
 
     <section class="lab-grid" aria-label="Animation examples">
       <article class="motion-card">
@@ -171,6 +187,7 @@
           </div>
           <pre tabindex="0"><code id="pg-css"></code></pre>
           <p class="pg-status" id="pg-status" role="status"></p>
+          <p class="pg-notice" data-motion-notice hidden><span>Animations are paused because of your system setting.</span> <button type="button" data-motion-play>Play them</button></p>
         </div>
       </div>
 
@@ -253,6 +270,7 @@
       </ul>
     </section>
   </main>
+  <script type="module" src="motion.js"></script>
   <script type="module" src="script.js"></script>
   <script type="module" src="playground.js"></script>
   <script type="module" src="bezier.js"></script>
