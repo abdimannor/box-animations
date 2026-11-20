@@ -32,6 +32,7 @@
     })();
   </script>
   <link rel="stylesheet" href="style.css">
+  <style id="kf-style"></style>
 </head>
 <body class="theme-night">
   <main class="page-shell">
@@ -151,6 +152,26 @@
             <label><input type="radio" name="anim" value="slide" checked> Slide</label>
             <label><input type="radio" name="anim" value="pulse"> Pulse</label>
             <label><input type="radio" name="anim" value="orbit"> Orbit</label>
+            <label><input type="radio" name="anim" value="custom"> Custom</label>
+          </fieldset>
+          <fieldset class="kf-builder" aria-describedby="kf-help">
+            <legend class="control-label">Custom keyframes</legend>
+            <p class="kf-help" id="kf-help">Press the track to add a stop, drag a stop to move it. Keys: arrows move the stop, Shift for 10%, Home and End switch stops, Delete removes it.</p>
+            <div class="kf-scale" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div>
+            <div class="kf-rail" id="kf-rail" role="group" aria-label="Keyframe stops"></div>
+            <div class="kf-buttons">
+              <button class="control-button" type="button" id="kf-add">Add stop</button>
+              <button class="control-button" type="button" id="kf-remove">Remove stop</button>
+            </div>
+            <div class="kf-editor" id="kf-editor">
+              <p class="kf-title" data-kf-title>Stop</p>
+              <label>Offset %<input type="number" name="kf-at" min="0" max="100" step="1"></label>
+              <label>Translate X px<input type="number" name="kf-x" min="-400" max="400" step="1"></label>
+              <label>Translate Y px<input type="number" name="kf-y" min="-200" max="200" step="1"></label>
+              <label>Rotate deg<input type="number" name="kf-r" min="-720" max="720" step="1"></label>
+              <label>Scale<input type="number" name="kf-s" min="0" max="4" step="0.05"></label>
+              <label>Opacity<input type="number" name="kf-o" min="0" max="1" step="0.05"></label>
+            </div>
           </fieldset>
           <label class="pg-field"><span class="control-label">Duration</span>
             <input type="range" name="duration" min="0.2" max="6" step="0.1" value="2.2">
