@@ -31,6 +31,7 @@ const draw = () => {
     h[i].setAttribute("aria-valuenow", round(pts[i][0]));
     h[i].setAttribute("aria-valuetext", `x ${round(pts[i][0])}, y ${round(pts[i][1])}`);
   });
+  state.spring = null;
   state.easing = easingString();
   out.value = state.easing;
   for (const btn of presets.querySelectorAll("button")) {
@@ -81,7 +82,7 @@ presets.addEventListener("click", (event) => {
 });
 
 document.addEventListener("pgload", (event) => {
-  if (event.detail) setPts(event.detail);
+  if (event.detail?.length === 4) setPts(event.detail);
   draw();
 });
 

@@ -65,7 +65,7 @@ const shareParams = (v) => {
     iterations: field("iterations"),
     direction: v.direction,
     fill: v.fill,
-    ease: ease.join(","),
+    ...(state.spring ? { spring: state.spring.join(",") } : { ease: ease.join(",") }),
     ...(v.anim === "custom" ? { kf: kfParam() } : {}),
   }).toString().replaceAll("%2C", ",").replaceAll("%3A", ":").replaceAll("%3B", ";");
 };
@@ -94,11 +94,15 @@ export const loadFromHash = () => {
   if (params.has("kf") && !loadKf(params.get("kf")) || params.get("anim") === "custom" && !params.has("kf")) {
     form.querySelector('[name="anim"][value="slide"]').checked = true;
   }
+  const spring = (params.get("spring") ?? "").split(",").map(Number);
+  pendingSpring = spring.length === 3 && spring.every((n) => Number.isFinite(n) && n > 0) ? spring : null;
   const ease = (params.get("ease") ?? "").split(",").map(Number);
   return ease.length === 4 && ease.every(Number.isFinite) ? ease : null;
 };
 
+let pendingSpring = null;
 export const initialEase = loadFromHash();
+export const initialSpring = pendingSpring;
 
 export const replay = () => {
   box.classList.remove("is-running");
@@ -122,7 +126,8 @@ copyLink.addEventListener("click", async () => {
 
 addEventListener("hashchange", () => {
   const ease = loadFromHash();
-  document.dispatchEvent(new CustomEvent("pgload", { detail: ease }));
+  const detail = ease ?? (pendingSpring ? Object.assign([], { spring: pendingSpring }) : null);
+  document.dispatchEvent(new CustomEvent("pgload", { detail }));
   render();
   replay();
 });
