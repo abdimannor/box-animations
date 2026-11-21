@@ -533,3 +533,32 @@
 @layer components {
   .pg-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 }
+
+/* Spring easing generator */
+@layer components {
+  .spring { display: grid; gap: 0.5rem; margin: 0.8rem 0 0; padding: 0.8rem 0 0; border: 0; border-block-start: 1px solid var(--line); }
+  .spring legend { float: left; inline-size: 100%; }
+  .spring-row { display: grid; grid-template-columns: 5.5rem 1fr 2.5rem; align-items: center; gap: 0.5rem; font-size: var(--step--1); }
+  .spring output[data-for] { font-variant-numeric: tabular-nums; text-align: end; }
+  .spring-graph { inline-size: min(100%, 14rem); justify-self: center; overflow: visible; }
+  .spring-graph polyline { stroke: var(--a2); stroke-width: 3; stroke-linejoin: round; }
+  .spring-rest { stroke: var(--line); stroke-dasharray: 4 4; }
+  .spring-value { overflow-wrap: anywhere; }
+  .spring #spring-use[aria-pressed="true"] { color: #10131a; outline: 2px solid var(--a2); outline-offset: 2px; }
+  .spring-note { margin: 0; font-size: var(--step--1); }
+}
+
+/* Preset gallery for the keyframes builder */
+@layer components {
+  .kf-gallery { margin: 0; padding: 0.9rem 0 0; border: 0; border-block-start: 1px solid var(--line); }
+  .kf-gallery legend { float: left; inline-size: 100%; padding-block-end: 0.6rem; }
+  .kf-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr)); gap: 0.5rem; clear: both; }
+  .kf-card {
+    display: grid; justify-items: center; gap: 0.45rem; padding: 0.7rem 0.4rem;
+    border: 1px solid var(--line); border-radius: 0.8rem; background: transparent; color: inherit;
+    font: 600 var(--step--1)/1.1 inherit; cursor: pointer;
+  }
+  .kf-card:hover, .kf-card[aria-pressed="true"] { border-color: var(--a2); }
+  .kf-card:focus-visible { outline: 3px solid var(--a2); outline-offset: 2px; }
+  .kf-card-box { inline-size: 1.4rem; block-size: 1.4rem; border-radius: 0.35rem; background: var(--a2); }
+}

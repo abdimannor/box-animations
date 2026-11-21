@@ -154,6 +154,19 @@
             <label><input type="radio" name="anim" value="orbit"> Orbit</label>
             <label><input type="radio" name="anim" value="custom"> Custom</label>
           </fieldset>
+          <fieldset class="kf-gallery" id="kf-gallery">
+            <legend class="control-label">Preset gallery</legend>
+            <div class="kf-cards">
+              <button type="button" class="kf-card" data-kf="0:0:0:0:0.3:0;50:0:0:0:1.08:1;70:0:0:0:0.94:1;100:0:0:0:1:1"><span class="kf-card-box" aria-hidden="true"></span>bounce-in</button>
+              <button type="button" class="kf-card" data-kf="0:0:0:0:1:1;15:-60:0:-5:1:1;30:40:0:3:1:1;45:-30:0:-3:1:1;60:20:0:2:1:1;75:-10:0:-1:1:1;100:0:0:0:1:1"><span class="kf-card-box" aria-hidden="true"></span>wobble</button>
+              <button type="button" class="kf-card" data-kf="0:0:0:0:1:1;14:0:0:0:1.3:1;28:0:0:0:1:1;42:0:0:0:1.3:1;70:0:0:0:1:1;100:0:0:0:1:1"><span class="kf-card-box" aria-hidden="true"></span>heartbeat</button>
+              <button type="button" class="kf-card" data-kf="0:0:0:0:1:1;50:0:-24:0:1:1;100:0:0:0:1:1"><span class="kf-card-box" aria-hidden="true"></span>float</button>
+              <button type="button" class="kf-card" data-kf="0:0:0:0:1:1;10:-12:0:0:1:1;30:12:0:0:1:1;50:-12:0:0:1:1;70:12:0:0:1:1;90:-12:0:0:1:1;100:0:0:0:1:1"><span class="kf-card-box" aria-hidden="true"></span>shake</button>
+              <button type="button" class="kf-card" data-kf="0:0:0:0:1:1;20:0:0:15:1:1;40:0:0:-10:1:1;60:0:0:5:1:1;80:0:0:-5:1:1;100:0:0:0:1:1"><span class="kf-card-box" aria-hidden="true"></span>swing</button>
+              <button type="button" class="kf-card" data-kf="0:0:0:-360:0:0;100:0:0:0:1:1"><span class="kf-card-box" aria-hidden="true"></span>spin-in</button>
+              <button type="button" class="kf-card" data-kf="0:0:-160:0:1:0;60:0:12:0:1:1;80:0:-6:0:1:1;100:0:0:0:1:1"><span class="kf-card-box" aria-hidden="true"></span>drop-in</button>
+            </div>
+          </fieldset>
           <fieldset class="kf-builder" aria-describedby="kf-help">
             <legend class="control-label">Custom keyframes</legend>
             <p class="kf-help" id="kf-help">Press the track to add a stop, drag a stop to move it. Keys: arrows move the stop, Shift for 10%, Home and End switch stops, Delete removes it.</p>
@@ -212,6 +225,16 @@
               <button type="button" data-ease="0.16, 1, 0.3, 1">expo-out</button>
             </div>
             <output class="bz-value" id="bz-value">cubic-bezier(0.65, 0, 0.35, 1)</output>
+            <fieldset class="spring" id="spring">
+              <legend class="control-label">Spring</legend>
+              <div class="spring-row"><label for="spring-mass">Mass</label><input id="spring-mass" type="range" name="spring-mass" min="0.5" max="5" step="0.1" value="1"> <output data-for="mass">1</output></div>
+              <div class="spring-row"><label for="spring-stiffness">Stiffness</label><input id="spring-stiffness" type="range" name="spring-stiffness" min="20" max="400" step="5" value="170"> <output data-for="stiffness">170</output></div>
+              <div class="spring-row"><label for="spring-damping">Damping</label><input id="spring-damping" type="range" name="spring-damping" min="1" max="60" step="1" value="12"> <output data-for="damping">12</output></div>
+              <svg class="spring-graph" viewBox="0 -10 200 160" aria-hidden="true"><line x1="0" y1="30" x2="200" y2="30" class="spring-rest"/><polyline id="spring-curve" fill="none"/></svg>
+              <output class="bz-value spring-value" id="spring-value"></output>
+              <button type="button" class="control-button" id="spring-use" aria-pressed="false">Use spring</button>
+              <p class="spring-note" id="spring-note" hidden>This browser does not support the CSS linear() easing, so the playground keeps the cubic-bezier.</p>
+            </fieldset>
           </fieldset>
           <div class="pg-actions">
             <button class="control-button pg-replay" type="button" id="pg-replay">Replay</button>
@@ -313,6 +336,7 @@
   <script type="module" src="script.js"></script>
   <script type="module" src="playground.js"></script>
   <script type="module" src="bezier.js"></script>
+  <script type="module" src="spring.js"></script>
   <script type="module" src="race.js"></script>
   <script type="module" src="scrub.js"></script>
 </body>

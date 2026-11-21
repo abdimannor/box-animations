@@ -187,3 +187,12 @@ rail.addEventListener("click", (event) => {
 });
 
 draw();
+
+// Preset gallery: each card holds a kf string (same format as the share link) and loads
+// it into the builder, switching the playground to the custom animation.
+document.querySelector("#kf-gallery")?.addEventListener("click", (event) => {
+  const card = event.target.closest("[data-kf]");
+  if (!card || !loadKf(card.dataset.kf)) return;
+  for (const c of document.querySelectorAll("#kf-gallery [data-kf]")) c.setAttribute("aria-pressed", String(c === card));
+  commit();
+});
