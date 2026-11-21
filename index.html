@@ -22,14 +22,11 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <script>
-    // Decide motion before first paint: a saved choice wins, otherwise the OS setting.
+    // Motion is on unless the visitor turned it off with the motion button.
     (() => {
       let saved = null;
       try { saved = localStorage.getItem("boxAnimationsMotion"); } catch {}
-      const system = matchMedia("(prefers-reduced-motion: reduce)").matches ? "off" : "on";
-      const root = document.documentElement;
-      root.dataset.motion = saved === "on" || saved === "off" ? saved : system;
-      root.dataset.motionSource = saved ? "visitor" : "system";
+      document.documentElement.dataset.motion = saved === "off" ? "off" : "on";
     })();
   </script>
   <link rel="stylesheet" href="style.css">
@@ -43,12 +40,14 @@
         <h1 id="page-title">Box Animations</h1>
         <p class="lead">An interactive playground for testing CSS motion patterns: slide, pulse, orbit, timing, themes, and accessible motion settings.</p>
       </div>
-      <a class="source-link" href="https://github.com/abdimannor/box-animations" target="_blank" rel="noopener">GitHub</a>
+      <div class="site-controls">
+        <a class="source-link" href="https://github.com/abdimannor/box-animations" target="_blank" rel="noopener">GitHub</a>
+        <button class="quiet-control" id="motion-switch" type="button" aria-pressed="true" aria-label="Pause motion" title="Pause motion"><svg class="icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.2"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.2"/></svg><svg class="icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5.8v12.4a1 1 0 0 0 1.5.86l10-6.2a1 1 0 0 0 0-1.72l-10-6.2A1 1 0 0 0 8 5.8z"/></svg></button>
+      </div>
     </section>
 
     <section class="control-panel" aria-label="Animation controls">
       <div class="control-group">
-        <button class="control-button motion-switch" id="motion-switch" type="button" role="switch" aria-checked="true"><span class="switch-track" aria-hidden="true"></span><span>Animations: <span class="motion-state">on</span></span></button>
         <button class="control-button" id="toggle-motion" type="button" aria-pressed="false">Pause</button>
       </div>
 
@@ -74,10 +73,6 @@
       <p class="fallback-note">Controls need JavaScript, but the CSS animations and examples still work without it.</p>
     </noscript>
 
-    <div class="motion-notice" id="motion-notice" role="status" hidden>
-      <p>Your system asks for reduced motion, so the demos are paused.</p>
-      <button type="button" data-motion-play>Play them anyway</button>
-    </div>
 
     <section class="lab-grid" aria-label="Animation examples">
       <article class="motion-card">
@@ -250,7 +245,6 @@
           </div>
           <pre tabindex="0"><code id="pg-css"></code></pre>
           <p class="pg-status" id="pg-status" role="status"></p>
-          <p class="pg-notice" data-motion-notice hidden><span>Animations are paused because of your system setting.</span> <button type="button" data-motion-play>Play them</button></p>
         </div>
       </div>
 

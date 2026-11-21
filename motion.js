@@ -1,26 +1,22 @@
-// Motion switch: the OS reduced-motion setting is the default, the visitor can override it.
+// Motion button: motion is on by default; the visitor can turn it off.
 // The choice lives in localStorage and on <html data-motion="on|off">, which the CSS reads.
 const KEY = "boxAnimationsMotion";
 const root = document.documentElement;
-const system = matchMedia("(prefers-reduced-motion: reduce)");
 const toggle = document.querySelector("#motion-switch");
-const notices = document.querySelectorAll("#motion-notice, [data-motion-notice]");
 
 const readSaved = () => {
   try { return localStorage.getItem(KEY); } catch { return null; }
 };
 
-export const motionOn = () => root.dataset.motion === "on";
+export const motionOn = () => root.dataset.motion !== "off";
 
 const apply = () => {
-  const saved = readSaved();
-  const on = saved === "on" || saved === "off" ? saved === "on" : !system.matches;
+  const on = readSaved() !== "off";
   root.dataset.motion = on ? "on" : "off";
-  root.dataset.motionSource = saved ? "visitor" : "system";
-  toggle.setAttribute("aria-checked", String(on));
-  toggle.querySelector(".motion-state").textContent = on ? "on" : "off";
-  const pausedBySystem = !saved && system.matches;
-  for (const notice of notices) notice.hidden = !pausedBySystem;
+  const label = on ? "Pause motion" : "Play motion";
+  toggle.setAttribute("aria-pressed", String(on));
+  toggle.setAttribute("aria-label", label);
+  toggle.title = label;
   document.dispatchEvent(new CustomEvent("motionchange", { detail: { on } }));
 };
 
@@ -30,8 +26,4 @@ const choose = (on) => {
 };
 
 toggle.addEventListener("click", () => choose(!motionOn()));
-document.addEventListener("click", (event) => {
-  if (event.target.closest("[data-motion-play]")) choose(true);
-});
-system.addEventListener("change", apply);
 apply();
