@@ -34,7 +34,7 @@ No framework and no build step: `index.html`, `style.css` and small ES modules.
 - `builder.js`, `bezier.js`, `spring.js`, `race.js`, `scrub.js`: one tool each
 - `motion.js`: the motion switch
 
-There are no automated tests in this repo.
+Tests live in `tests/`: Playwright checks that every page loads without errors, that the motion switch works under reduced motion, and that axe finds no accessibility violations. CI runs them with `npm test` on every push.
 
 ## Running it locally
 
