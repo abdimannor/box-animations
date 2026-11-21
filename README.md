@@ -23,7 +23,7 @@ Page controls: Pause/Play, a speed slider (0.5x to 2x, which rewrites the durati
 
 ## Reduced motion
 
-A visible motion switch follows the system's reduced-motion setting by default and remembers an override. With motion off the studies settle into still frames. Without JavaScript the three studies still run; only the tools are inactive, and a `<noscript>` note says so.
+Motion is on by default. A small pause button in the header turns it off and remembers the choice. With motion off the studies settle into still frames. Without JavaScript the three studies still run; only the tools are inactive, and a `<noscript>` note says so.
 
 ## How it is built
 
@@ -34,7 +34,7 @@ No framework and no build step: `index.html`, `style.css` and small ES modules.
 - `builder.js`, `bezier.js`, `spring.js`, `race.js`, `scrub.js`: one tool each
 - `motion.js`: the motion switch
 
-Tests live in `tests/`: Playwright checks that every page loads without errors, that the motion switch works under reduced motion, and that axe finds no accessibility violations. CI runs them with `npm test` on every push.
+Tests live in `tests/`: Playwright checks that every page loads without errors, that motion runs by default even when the system asks for reduced motion, that the pause button stops it and the choice survives a reload, and that axe finds no accessibility violations. CI runs them with `npm test` on every push.
 
 ## Running it locally
 
