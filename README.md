@@ -1,47 +1,48 @@
 # Box Animations
 
-A small CSS motion lab. It started as an exercise in moving one box inside another and grew into a page with three animation studies, live controls and copyable snippets.
+Live: [abdimannor.github.io/box-animations](https://abdimannor.github.io/box-animations/)
 
-**Live:** [abdimannor.github.io/box-animations](https://abdimannor.github.io/box-animations/)
+A CSS motion lab. It started as an exercise in moving one box inside another and became a place to build an animation, tune its timing by hand or by physics, and take the CSS with you.
 
-## What it shows
+## What you can do with it
 
-1. **Sliding box (translate).** A box travels back and forth along a rounded rail. It moves with `transform: translateX(...)`, so the layout around it never shifts, and `animation-direction: alternate` lets one keyframe pair cover both directions. The easing is a symmetric `cubic-bezier(0.65, 0, 0.35, 1)`, slow at both ends.
-2. **Pulse timing (scale).** Two boxes share one `@keyframes` rule that scales, rotates and fades them. The second box starts 0.42 s later through `animation-delay`, which turns a single animation into a two-beat rhythm.
-3. **Orbit path (rotation).** A dashed ring rotates a full turn while the box sitting on its edge runs a counter-rotation of the same length. The two cancel out, so the box travels around the circle but stays upright. This is the nesting idea from the original exercise: the parent carries the motion, the child corrects it.
+- **Build your own keyframes.** Add, remove and drag stops on a 0-100% track (arrow keys work too) and give each stop translate, rotate, scale and opacity. A gallery of eight preset animations gives you a starting point.
+- **Shape the easing.** Drag the two handles of a cubic-bezier curve, or pick a preset.
+- **Use a spring instead.** Mass, stiffness and damping sliders sample a damped spring into a CSS `linear()` easing. Browsers without `linear()` get a note and keep the bezier.
+- **Race timing functions.** Five boxes cover the same distance in the same time with different easings, including your own, so the difference is visible at a glance.
+- **Scrub through a demo.** Pause one of the three studies and drag through it with the Web Animations API.
+- **Copy or share the result.** A live panel shows the CSS for what you built, and a share link carries the keyframes, easing and spring in the URL.
 
-## Controls
+## The three studies
 
-- **Pause / Play** adds a class that sets `animation-play-state: paused` on everything.
-- **Speed** (0.5x to 2x) rewrites the duration custom properties (`--slide-duration`, `--pulse-duration`, `--orbit-duration`) from `script.js`, so the CSS keeps the animations and JavaScript only adjusts timing.
-- **Theme** switches between three colour presets (Paper, Night, Signal) defined as custom-property sets and remembers the choice in `localStorage`.
-- Each snippet card has a **Copy** button for the matching CSS.
+1. **Sliding box (translate).** A box travels along a rail with `transform: translateX(...)`, so nothing around it shifts. `animation-direction: alternate` covers both directions with one keyframe pair; the easing is a symmetric `cubic-bezier(0.65, 0, 0.35, 1)`.
+2. **Pulse timing (scale).** Two boxes share one `@keyframes` rule; the second starts 0.42 s later through `animation-delay`, which turns one animation into a two-beat rhythm.
+3. **Orbit path (rotation).** A dashed ring turns while the box on its edge counter-rotates for the same length, so it travels round the circle but stays upright. This is the nesting idea from the original exercise: the parent carries the motion, the child corrects it.
 
-Without JavaScript the animations still run; only the controls are inactive, and a `<noscript>` note says so.
+Page controls: Pause/Play, a speed slider (0.5x to 2x, which rewrites the duration custom properties), three themes (Paper, Night, Signal, remembered in `localStorage`), and a Copy button on each snippet. The page ends with a short motion checklist.
 
 ## Reduced motion
 
-When the system asks for reduced motion (`prefers-reduced-motion: reduce`), animations and transitions are cut to a near-instant single run and the hover lifts on buttons are switched off, so the page settles into still frames.
+A visible motion switch follows the system's reduced-motion setting by default and remembers an override. With motion off the studies settle into still frames. Without JavaScript the three studies still run; only the tools are inactive, and a `<noscript>` note says so.
+
+## How it is built
+
+No framework and no build step: `index.html`, `style.css` and small ES modules.
+
+- `script.js`: pause, speed, theme and copy for the three studies
+- `playground.js`: the shared state, live CSS panel, preview and share link
+- `builder.js`, `bezier.js`, `spring.js`, `race.js`, `scrub.js`: one tool each
+- `motion.js`: the motion switch
+
+Tests live in `tests/`: Playwright checks that every page loads without errors, that the motion switch works under reduced motion, and that axe finds no accessibility violations. CI runs them with `npm test` on every push.
 
 ## Running it locally
-
-There is no build step. Open `index.html` in a browser, or serve the folder:
 
 ```sh
 python3 -m http.server 8000
 ```
 
 Then visit `http://localhost:8000`. Pushes to `master` deploy to GitHub Pages through `.github/workflows/deploy.yml`.
-
-## Files
-
-- `index.html`: page structure, the three studies and the snippets
-- `style.css`: themes, layout, keyframes and the reduced-motion rules
-- `script.js`: pause, speed, theme and copy controls
-
-## Possible next steps
-
-A custom keyframe editor, exportable CSS variables per theme, and a side-by-side view for comparing easing curves.
 
 ## License
 
